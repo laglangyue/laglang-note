@@ -16,16 +16,26 @@ inThisBuild(
   )
 )
 
+lazy val laglang = (project in file("."))
+  .aggregate(
+    coding
+  )
+  .settings(
+    publish / skip := true,
+    commands ++= Commands.value
+  )
+
 lazy val coding = project.in(file("coding"))
 
-lazy val mdoc = project
+lazy val docs = project
   .in(file("mdoc"))
   .enablePlugins(MdocPlugin, DocusaurusPlugin)
   .settings(
     publish / skip := true,
-    name           := "laglangyue-docs",
+    name           := "laglang-docs",
     mdocIn         := (ThisBuild / baseDirectory).value / "docs",
     run / fork     := true,
     scalacOptions -= "-Xfatal-warnings",
     scalacOptions += "-Wunused:imports"
   )
+  .dependsOn(coding)
