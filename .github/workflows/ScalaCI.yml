@@ -1,0 +1,111 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags: [ "*" ]
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 21 ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'adopt'
+          
+      - name: Cache scala dependencies
+        uses: coursier/cache-action@v6
+        
+      - name: Checking Code style
+        run: sbt check
+  
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'adopt'
+
+      - name: Run Test
+        if: success() || failure()
+        run: sbt compile coverage test
+
+      - name: Aggregate coverage report
+        run: sbt coverageAggregate
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: SymphonyQL/SymphonyQL
+        
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'adopt'
+          
+      - name: Update docs
+        run: |
+          git config --global user.name "SymphonyQL Docs"
+          git config --global user.email "568845948@qq.com"
+          eval "$(ssh-agent -s)"
+          echo "$TOKEN" | ssh-add -
+          sbt docs/mdoc
+          cd website
+          yarn install
+          yarn deploy
+        env:
+          TOKEN: ${{secrets.DEPLOY_KEY}}
+          USE_SSH: true
+          GIT_USER: git
+  
+  publish:
+    runs-on: ubuntu-latest
+    needs: [ check, test ]
+    if: github.event_name != 'pull_request'
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'adopt'
+          
+      - name: Release artifacts
+        run: sbt ci-release
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+  
+  ci:
+    runs-on: ubuntu-latest
+    needs: [ check, test, docs ]
+    steps:
+      - name: Aggregate outcomes
+        run: echo "build succeeded"          
