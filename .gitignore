@@ -6,3 +6,6 @@ hs_err_pid*
 .idea/
 project/project/**
 target
+/website/.docusaurus
+/website/node_modules
+/website/build
