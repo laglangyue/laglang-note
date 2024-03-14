@@ -4,12 +4,12 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'LagLang Notes',
+  tagline: 'LagLang Notes are cool',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -20,8 +20,8 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'org.github.laglangyue', // Usually your GitHub org/user name.
+  projectName: 'LagLang Notes', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -56,17 +56,23 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: 'LagLang Notes',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'LagLang Notes',
           src: 'img/logo.svg',
         },
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            sidebarId: 'JavaSidebars',
+            label: 'Java',
+          },
+          {
+            type: 'docSidebar',
+            position: 'left',
+            sidebarId: 'MysqlSidebars',
+            label: 'Mysql',
           },
           {
             href: 'https://github.com/facebook/docusaurus',
