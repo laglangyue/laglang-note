@@ -58,7 +58,7 @@ jobs:
           
       - name: Update docs
         run: |
-          git config --global user.name "tangjiafu"
+          git config --global user.name "laglangyue"
           git config --global user.email "jiafu.tang@qq.com"
           eval "$(ssh-agent -s)"
           echo "$TOKEN" | ssh-add -
