@@ -20,18 +20,22 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'org.github.laglangyue', // Usually your GitHub org/user name.
-  projectName: 'LagLang Notes', // Usually your repo name.
+  organizationName: 'laglangyue', // Usually your GitHub org/user name.
+  projectName: 'laglang-note', // Usually your repo name.
+
+  deploymentBranch: 'gh-pages',
+  trailingSlash: true,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'zh-Hans',
+    locales: ['zh-Hans'],
   },
 
   presets: [

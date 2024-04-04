@@ -41,16 +41,7 @@ jobs:
 
       - name: Run Test
         if: success() || failure()
-        run: sbt compile coverage test
-
-      - name: Aggregate coverage report
-        run: sbt coverageAggregate
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: laglangyue/laglang-note
+        run: sbt compile test
         
   docs:
     runs-on: ubuntu-latest
@@ -67,7 +58,7 @@ jobs:
           
       - name: Update docs
         run: |
-          git config --global user.name "tangjiafu"
+          git config --global user.name "laglangyue"
           git config --global user.email "jiafu.tang@qq.com"
           eval "$(ssh-agent -s)"
           echo "$TOKEN" | ssh-add -
