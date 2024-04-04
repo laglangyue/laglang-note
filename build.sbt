@@ -27,6 +27,8 @@ lazy val laglang = (project in file("."))
 
 lazy val coding = project.in(file("coding"))
 
+lazy val modules = project.in(file("modules"))
+
 lazy val docs = project
   .in(file("mdoc"))
   .enablePlugins(MdocPlugin, DocusaurusPlugin)
