@@ -20,8 +20,8 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'org.github.laglangyue', // Usually your GitHub org/user name.
-  projectName: 'LagLang Notes', // Usually your repo name.
+  organizationName: 'laglangyue', // Usually your GitHub org/user name.
+  projectName: 'laglangyue-note', // Usually your repo name.
 
   deploymentBranch: 'gh-pages',
   trailingSlash: true,
