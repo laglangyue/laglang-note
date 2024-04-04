@@ -9,3 +9,4 @@ target
 /website/.docusaurus
 /website/node_modules
 /website/build
+.bsp/*
