@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.user";
+option java_outer_classname = "UserProto";
+
+package user;
+
+message UserRequest {
+  string email = 1;
+}
+
+message UserListRequest {
+  repeated string emails = 1;
+}
+
+message User {
+  string email = 1;
+  string name = 2;
+}
+
+message UserList {
+  repeated User users = 1;
+}
+
+service UserService {
+  // Unary RPC
+  rpc GetUser (UserRequest) returns (User) {}
+
+  // Server Streaming RPC
+  rpc GetBatchUsers (UserListRequest) returns (stream User) {}
+
+  // Client Streaming RPC
+  rpc GetBatchUsersFromIds (stream UserRequest) returns (UserList) {}
+
+  // Bidirectional Streaming RPC
+  rpc GetBatchUsersViaIds (stream UserRequest) returns (stream User) {}
+}
